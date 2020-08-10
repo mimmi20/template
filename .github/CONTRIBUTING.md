@@ -6,7 +6,6 @@ For details, take a look at the following workflow configuration files:
 
 - [`workflows/continuous-integration.yaml`](workflows/continuous-integration.yaml)
 - [`workflows/lock-closed-issues.yaml`](workflows/lock-closed-issues.yaml)
-- [`workflows/scan.yaml`](workflows/scan.yaml)
 - [`workflows/stale.yaml`](workflows/stale.yaml)
 
 ## Coding Standards

@@ -32,7 +32,7 @@ categories:
   - title: '**🧹 Maintenance:**'
     labels:
       - 'maintenance'
-  # other Labels to mimmi20/browscap-helper
-  - title: '**📦 new Useragents:**'
-    labels:
-      - 'new useragents'
+  # other Labels to mimmi20/template
+  #- title: '**📦 new Useragents:**'
+  #  labels:
+  #    - 'new useragents'

@@ -20,7 +20,7 @@ jobs:
 
     strategy:
       fail-fast: false
-      
+
       matrix:
         operating-system:
           - "ubuntu-latest"
@@ -61,7 +61,7 @@ jobs:
 
     strategy:
       fail-fast: false
-      
+
       matrix:
         operating-system:
           - "ubuntu-latest"
@@ -122,7 +122,7 @@ jobs:
           tools: "composer:v2"
 
       - name: "Update dependencies with composer"
-        run: "composer update --optimize-autoloader --prefer-dist --prefer-stable --no-progress --no-interaction --no-suggest -vv ${{ matrix.dependencies }}"
+        run: "composer update --optimize-autoloader --prefer-dist --prefer-stable --no-progress --no-interaction -vv ${{ matrix.dependencies }}"
 
       - name: "Check dependencies with composer"
         run: "composer outdated --direct --strict"
@@ -138,7 +138,7 @@ jobs:
 
     strategy:
       fail-fast: false
-      
+
       matrix:
         operating-system:
           - "ubuntu-latest"
@@ -163,7 +163,7 @@ jobs:
           tools: "composer:v2"
 
       - name: "Update dependencies with composer"
-        run: "composer update --optimize-autoloader --prefer-dist --prefer-stable --no-progress --no-interaction --no-suggest -vv ${{ matrix.dependencies }}"
+        run: "composer update --optimize-autoloader --prefer-dist --prefer-stable --no-progress --no-interaction -vv ${{ matrix.dependencies }}"
 
       - name: "Run friendsofphp/php-cs-fixer"
         run: "vendor/bin/php-cs-fixer fix --dry-run -vv"
@@ -179,7 +179,7 @@ jobs:
 
     strategy:
       fail-fast: false
-      
+
       matrix:
         operating-system:
           - "ubuntu-latest"
@@ -204,7 +204,7 @@ jobs:
           tools: "composer:v2"
 
       - name: "Update dependencies with composer"
-        run: "composer update --optimize-autoloader --prefer-dist --prefer-stable --no-progress --no-interaction --no-suggest -vv ${{ matrix.dependencies }}"
+        run: "composer update --optimize-autoloader --prefer-dist --prefer-stable --no-progress --no-interaction -vv ${{ matrix.dependencies }}"
 
       - name: "Run squizlabs/php_codesniffer"
         uses: "chekalsky/phpcs-action@v1.2.0"
@@ -221,7 +221,7 @@ jobs:
 
     strategy:
       fail-fast: false
-      
+
       matrix:
         operating-system:
           - "ubuntu-latest"
@@ -246,7 +246,7 @@ jobs:
           tools: "composer:v2"
 
       - name: "Update dependencies with composer"
-        run: "composer update --optimize-autoloader --prefer-dist --prefer-stable --no-progress --no-interaction --no-suggest -vv ${{ matrix.dependencies }}"
+        run: "composer update --optimize-autoloader --prefer-dist --prefer-stable --no-progress --no-interaction -vv ${{ matrix.dependencies }}"
 
       - name: "Run phpstan/phpstan"
         run: "vendor/bin/phpstan analyse -c phpstan.neon --memory-limit=768M --no-progress"
@@ -262,7 +262,7 @@ jobs:
 
     strategy:
       fail-fast: false
-      
+
       matrix:
         operating-system:
           - "ubuntu-latest"
@@ -306,7 +306,7 @@ jobs:
           tools: "composer:v2"
 
       - name: "Update dependencies with composer"
-        run: "composer update --optimize-autoloader --prefer-dist --prefer-stable --no-progress --no-interaction --no-suggest -vv ${{ matrix.dependencies }}"
+        run: "composer update --optimize-autoloader --prefer-dist --prefer-stable --no-progress --no-interaction -vv ${{ matrix.dependencies }}"
 
       - name: "Run unit tests with phpunit/phpunit"
         run: "vendor/bin/phpunit -c phpunit.xml --colors --no-coverage"
@@ -318,11 +318,11 @@ jobs:
 
     runs-on: "${{ matrix.operating-system }}"
 
-    continue-on-error: true
+    continue-on-error: false
 
     strategy:
       fail-fast: false
-      
+
       matrix:
         operating-system:
           - "ubuntu-latest"
@@ -351,20 +351,20 @@ jobs:
           tools: "composer:v2"
 
       - name: "Update dependencies with composer"
-        run: "composer update --optimize-autoloader --prefer-dist --prefer-stable --no-progress --no-interaction --no-suggest -vv ${{ matrix.dependencies }}"
+        run: "composer update --optimize-autoloader --prefer-dist --prefer-stable --no-progress --no-interaction -vv ${{ matrix.dependencies }}"
 
       - name: "Create cache directory for phpunit/phpunit"
         run: "mkdir -p .build/coverage"
 
-      - name: "Collect code coverage with Xdebug and phpunit/phpunit"
-        run: "vendor/bin/phpunit -c phpunit.xml --colors --coverage-clover=.build/coverage/clover.xml --coverage-text --coverage-xml=.build/coverage/coverage-xml --log-junit=.build/coverage/phpunit.junit.xml"
+      #- name: "Collect code coverage with Xdebug and phpunit/phpunit"
+      #  run: "vendor/bin/phpunit -c phpunit.xml --colors --coverage-clover=.build/coverage/clover.xml --coverage-text --coverage-xml=.build/coverage/coverage-xml --log-junit=.build/coverage/phpunit.junit.xml"
 
-      - name: "Upload coverage to Codecov"
-        uses: "codecov/codecov-action@v1.0.14"
-        with:
-          token: "${{secrets.CODECOV_TOKEN}}"
-          file: ".build/coverage/clover.xml"
-          flags: "phpunit"
+      #- name: "Upload coverage to Codecov"
+      #  uses: "codecov/codecov-action@v1.0.14"
+      #  with:
+      #    token: "${{secrets.CODECOV_TOKEN}}"
+      #    file: ".build/coverage/clover.xml"
+      #    flags: "phpunit"
 
-      - name: "Run mutation tests with infection/infection"
-        run: "vendor/bin/infection --min-covered-msi=95 --min-msi=95 --coverage=.build/coverage"
+      #- name: "Run mutation tests with infection/infection"
+      #  run: "vendor/bin/infection --min-covered-msi=95 --min-msi=95 --coverage=.build/coverage"

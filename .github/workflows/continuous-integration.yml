@@ -122,7 +122,7 @@ jobs:
           tools: "composer:v2"
 
       - name: "Update dependencies with composer"
-        run: "composer update --optimize-autoloader --prefer-dist --prefer-stable --no-progress --no-interaction -vv ${{ matrix.dependencies }}"
+        run: "composer update --optimize-autoloader --prefer-dist --prefer-stable --no-progress --no-interaction -vv --ansi ${{ matrix.dependencies }}"
 
       - name: "Check dependencies with composer"
         run: "composer outdated --direct --strict"
@@ -163,7 +163,7 @@ jobs:
           tools: "composer:v2"
 
       - name: "Update dependencies with composer"
-        run: "composer update --optimize-autoloader --prefer-dist --prefer-stable --no-progress --no-interaction -vv ${{ matrix.dependencies }}"
+        run: "composer update --optimize-autoloader --prefer-dist --prefer-stable --no-progress --no-interaction -vv --ansi ${{ matrix.dependencies }}"
 
       - name: "Run friendsofphp/php-cs-fixer"
         run: "vendor/bin/php-cs-fixer fix --dry-run -vv"
@@ -204,7 +204,7 @@ jobs:
           tools: "composer:v2"
 
       - name: "Update dependencies with composer"
-        run: "composer update --optimize-autoloader --prefer-dist --prefer-stable --no-progress --no-interaction -vv ${{ matrix.dependencies }}"
+        run: "composer update --optimize-autoloader --prefer-dist --prefer-stable --no-progress --no-interaction -vv --ansi ${{ matrix.dependencies }}"
 
       - name: "Run squizlabs/php_codesniffer"
         uses: "chekalsky/phpcs-action@v1.2.0"
@@ -246,7 +246,7 @@ jobs:
           tools: "composer:v2"
 
       - name: "Update dependencies with composer"
-        run: "composer update --optimize-autoloader --prefer-dist --prefer-stable --no-progress --no-interaction -vv ${{ matrix.dependencies }}"
+        run: "composer update --optimize-autoloader --prefer-dist --prefer-stable --no-progress --no-interaction -vv --ansi ${{ matrix.dependencies }}"
 
       - name: "Run phpstan/phpstan"
         run: "vendor/bin/phpstan analyse -c phpstan.neon --memory-limit=768M --no-progress"
@@ -306,7 +306,7 @@ jobs:
           tools: "composer:v2"
 
       - name: "Update dependencies with composer"
-        run: "composer update --optimize-autoloader --prefer-dist --prefer-stable --no-progress --no-interaction -vv ${{ matrix.dependencies }}"
+        run: "composer update --optimize-autoloader --prefer-dist --prefer-stable --no-progress --no-interaction -vv --ansi ${{ matrix.dependencies }}"
 
       - name: "Run unit tests with phpunit/phpunit"
         run: "vendor/bin/phpunit -c phpunit.xml --colors --no-coverage"
@@ -351,7 +351,7 @@ jobs:
           tools: "composer:v2"
 
       - name: "Update dependencies with composer"
-        run: "composer update --optimize-autoloader --prefer-dist --prefer-stable --no-progress --no-interaction -vv ${{ matrix.dependencies }}"
+        run: "composer update --optimize-autoloader --prefer-dist --prefer-stable --no-progress --no-interaction -vv --ansi ${{ matrix.dependencies }}"
 
       - name: "Create cache directory for phpunit/phpunit"
         run: "mkdir -p .build/coverage"

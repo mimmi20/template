@@ -70,7 +70,6 @@ jobs:
 
         php-version:
           - "7.4"
-          - "8.0"
 
         dependencies:
           - "--prefer-lowest"
@@ -79,7 +78,31 @@ jobs:
         continue-on-error:
           - false
 
-#        include:
+        include:
+          - operating-system: "ubuntu-latest"
+            php-version: "8.0"
+            dependencies: "--prefer-lowest"
+            continue-on-error: true
+          - operating-system: "ubuntu-latest"
+            php-version: "8.0"
+            dependencies: ""
+            continue-on-error: true
+          - operating-system: "windows-latest"
+            dependencies: "--prefer-lowest"
+            php-version: "8.0"
+            continue-on-error: true
+          - operating-system: "windows-latest"
+            dependencies: ""
+            php-version: "8.0"
+            continue-on-error: true
+          - operating-system: "macos-latest"
+            dependencies: "--prefer-lowest"
+            php-version: "8.0"
+            continue-on-error: true
+          - operating-system: "macos-latest"
+            dependencies: ""
+            php-version: "8.0"
+            continue-on-error: true
 #          - operating-system: "ubuntu-latest"
 #            php-version: "8.1"
 #            dependencies: "--prefer-lowest"

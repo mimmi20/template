@@ -443,11 +443,11 @@ jobs:
 #        run: "vendor/bin/phpunit -c phpunit.xml --colors --coverage-clover=.build/coverage/clover.xml --coverage-text --coverage-xml=.build/coverage/coverage-xml --log-junit=.build/coverage/phpunit.junit.xml"
 #
 #      - name: "Upload coverage to Codecov"
-#        uses: "codecov/codecov-action@v1.2.1"
+#        uses: "codecov/codecov-action@v1.5.2"
 #        with:
-#          token: "${{secrets.CODECOV_TOKEN}}"
 #          file: ".build/coverage/clover.xml"
 #          flags: "phpunit,php-${{ matrix.php-version }},${{ matrix.coverage-drivers }}"
+#          verbose: true
 #
 #      - name: "Run mutation tests with infection/infection"
 #        run: "vendor/bin/infection --min-covered-msi=95 --min-msi=95 --coverage=.build/coverage"

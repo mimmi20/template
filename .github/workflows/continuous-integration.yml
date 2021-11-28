@@ -34,6 +34,9 @@ jobs:
     steps:
       - name: "Checkout"
         uses: "actions/checkout@v2.4.0"
+        with:
+          # Disabling shallow clone is recommended for improving relevancy of reporting
+          fetch-depth: 0
 
       - name: "Install PHP"
         uses: "shivammathur/setup-php@2.16.0"
@@ -78,6 +81,9 @@ jobs:
     steps:
       - name: "Checkout"
         uses: "actions/checkout@v2.4.0"
+        with:
+          # Disabling shallow clone is recommended for improving relevancy of reporting
+          fetch-depth: 0
 
       - name: "Install PHP"
         uses: "shivammathur/setup-php@2.16.0"
@@ -130,6 +136,9 @@ jobs:
     steps:
       - name: "Checkout"
         uses: "actions/checkout@v2.4.0"
+        with:
+          # Disabling shallow clone is recommended for improving relevancy of reporting
+          fetch-depth: 0
 
       - name: "Install PHP"
         uses: "shivammathur/setup-php@2.16.0"
@@ -182,6 +191,9 @@ jobs:
     steps:
       - name: "Checkout"
         uses: "actions/checkout@v2.4.0"
+        with:
+          # Disabling shallow clone is recommended for improving relevancy of reporting
+          fetch-depth: 0
 
       - name: "Install PHP"
         uses: "shivammathur/setup-php@2.16.0"
@@ -232,6 +244,9 @@ jobs:
     steps:
       - name: "Checkout"
         uses: "actions/checkout@v2.4.0"
+        with:
+          # Disabling shallow clone is recommended for improving relevancy of reporting
+          fetch-depth: 0
 
       - name: "Install PHP"
         uses: "shivammathur/setup-php@2.16.0"
@@ -284,6 +299,9 @@ jobs:
     steps:
       - name: "Checkout"
         uses: "actions/checkout@v2.4.0"
+        with:
+          # Disabling shallow clone is recommended for improving relevancy of reporting
+          fetch-depth: 0
 
       - name: "Install PHP"
         uses: "shivammathur/setup-php@2.16.0"
@@ -337,6 +355,9 @@ jobs:
     steps:
       - name: "Checkout"
         uses: "actions/checkout@v2.4.0"
+        with:
+          # Disabling shallow clone is recommended for improving relevancy of reporting
+          fetch-depth: 0
 
       - name: "Install PHP"
         uses: "shivammathur/setup-php@2.15.0"
@@ -391,6 +412,9 @@ jobs:
     steps:
       - name: "Checkout"
         uses: "actions/checkout@v2.4.0"
+        with:
+          # Disabling shallow clone is recommended for improving relevancy of reporting
+          fetch-depth: 0
 
       - name: "Install PHP"
         uses: "shivammathur/setup-php@2.16.0"
@@ -446,6 +470,9 @@ jobs:
     steps:
       - name: "Checkout"
         uses: "actions/checkout@v2.4.0"
+        with:
+          # Disabling shallow clone is recommended for improving relevancy of reporting
+          fetch-depth: 0
 
       - name: "Install PHP"
         uses: "shivammathur/setup-php@2.16.0"

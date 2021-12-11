@@ -42,8 +42,7 @@
     "hooks": {
       "pre-commit": [
         "echo committing as $(git config user.name)"
-      ],
-      "post-merge": "composer update"
+      ]
     }
   }
 }

@@ -20,17 +20,30 @@
     "ext-mbstring": "*"
   },
   "require-dev": {
-    "ergebnis/composer-normalize": "^2.18.0",
-    "mimmi20/coding-standard": "^2.5.1",
-    "phpstan/extension-installer": "^1.1.0",
-    "phpstan/phpstan": "^1.2.0",
-    "phpstan/phpstan-deprecation-rules": "^1.0.0",
-    "phpstan/phpstan-phpunit": "^1.0.0",
-    "phpunit/phpunit": "^9.5.10",
-    "rector/rector": "^0.12.7"
+    "bamarni/composer-bin-plugin": "^1.4.1"
   },
   "config": {
     "preferred-install": "dist",
     "sort-packages": true
+  },
+  "scripts": {
+    "bin": "echo 'bin not installed'",
+    "post-install-cmd": [
+      "@composer bin all install --ansi",
+      "cghooks add --ignore-lock"
+    ],
+    "post-update-cmd": [
+      "@composer bin all update --ansi",
+      "cghooks update"
+    ],
+    "cghooks": "vendor/bin/cghooks"
+  },
+  "extra": {
+    "hooks": {
+      "pre-commit": [
+        "echo committing as $(git config user.name)"
+      ],
+      "post-merge": "composer update"
+    }
   }
 }

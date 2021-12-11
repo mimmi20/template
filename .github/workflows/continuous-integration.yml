@@ -90,7 +90,12 @@ jobs:
           tools: "${{ env.TOOLS }}"
 
       - name: "Lint PHP"
-        uses: "overtrue/phplint@${{ matrix.php-version }}"
+        if: "${{ matrix.php-version == '7.4' }}"
+        uses: "overtrue/phplint@7.4"
+
+      - name: "Lint PHP"
+        if: "${{ matrix.php-version != '7.4' }}"
+        uses: "overtrue/phplint@8.0"
 
   install:
     name: "Install dependencies"

@@ -29,20 +29,10 @@
   "scripts": {
     "bin": "echo 'bin not installed'",
     "post-install-cmd": [
-      "@composer bin all install --ansi",
-      "cghooks add --ignore-lock"
+      "@composer bin all install --ansi"
     ],
     "post-update-cmd": [
-      "@composer bin all update --ansi",
-      "cghooks update"
-    ],
-    "cghooks": "vendor/bin/cghooks"
-  },
-  "extra": {
-    "hooks": {
-      "pre-commit": [
-        "echo committing as $(git config user.name)"
-      ]
-    }
+      "@composer bin all update --ansi"
+    ]
   }
 }

@@ -151,7 +151,7 @@ jobs:
           tools: "${{ env.TOOLS }}"
 
       - name: "Update dependencies with composer"
-        uses: "ramsey/composer-install@v1.3.0"
+        uses: "ramsey/composer-install@v1"
         with:
           dependency-versions: "${{ matrix.dependencies }}"
           composer-options: "${{ env.COMPOSER_OPTIONS }}"
@@ -198,7 +198,7 @@ jobs:
           tools: "${{ env.TOOLS }}, cs2pr"
 
       - name: "Update dependencies with composer"
-        uses: "ramsey/composer-install@v1.3.0"
+        uses: "ramsey/composer-install@v1"
         with:
           dependency-versions: "${{ matrix.dependencies }}"
           composer-options: "${{ env.COMPOSER_OPTIONS }}"
@@ -245,7 +245,7 @@ jobs:
           tools: "${{ env.TOOLS }}, cs2pr"
 
       - name: "Update dependencies with composer"
-        uses: "ramsey/composer-install@v1.3.0"
+        uses: "ramsey/composer-install@v1"
         with:
           dependency-versions: "${{ matrix.dependencies }}"
           composer-options: "${{ env.COMPOSER_OPTIONS }}"
@@ -290,7 +290,7 @@ jobs:
           tools: "${{ env.TOOLS }}"
 
       - name: "Update dependencies with composer"
-        uses: "ramsey/composer-install@v1.3.0"
+        uses: "ramsey/composer-install@v1"
         with:
           dependency-versions: "${{ matrix.dependencies }}"
           composer-options: "${{ env.COMPOSER_OPTIONS }}"
@@ -337,7 +337,7 @@ jobs:
           tools: "${{ env.TOOLS }}, phpmd"
 
       - name: "Update dependencies with composer"
-        uses: "ramsey/composer-install@v1.3.0"
+        uses: "ramsey/composer-install@v1"
         with:
           dependency-versions: "${{ matrix.dependencies }}"
           composer-options: "${{ env.COMPOSER_OPTIONS }}"
@@ -385,7 +385,7 @@ jobs:
           tools: "${{ env.TOOLS }}"
 
       - name: "Update dependencies with composer"
-        uses: "ramsey/composer-install@v1.3.0"
+        uses: "ramsey/composer-install@v1"
         with:
           dependency-versions: "${{ matrix.dependencies }}"
           composer-options: "${{ env.COMPOSER_OPTIONS }}"
@@ -434,7 +434,7 @@ jobs:
           tools: "${{ env.TOOLS }}"
 
       - name: "Update dependencies with composer"
-        uses: "ramsey/composer-install@v1.3.0"
+        uses: "ramsey/composer-install@v1"
         with:
           dependency-versions: "${{ matrix.dependencies }}"
           composer-options: "${{ env.COMPOSER_OPTIONS }}"
@@ -484,7 +484,7 @@ jobs:
           tools: "${{ env.TOOLS }}, infection"
 
       - name: "Update dependencies with composer"
-        uses: "ramsey/composer-install@v1.3.0"
+        uses: "ramsey/composer-install@v1"
         with:
           dependency-versions: "${{ matrix.dependencies }}"
           composer-options: "${{ env.COMPOSER_OPTIONS }}"
@@ -547,7 +547,7 @@ jobs:
         run: "composer require --no-update --no-interaction --prefer-dist --prefer-stable --dev \"roave/backward-compatibility-check:6.0.x-dev\" \"roave/better-reflection:5.0.x-dev\""
 
       - name: "Update dependencies with composer"
-        uses: "ramsey/composer-install@v1.3.0"
+        uses: "ramsey/composer-install@v1"
         with:
           dependency-versions: "${{ matrix.dependencies }}"
           composer-options: "${{ env.COMPOSER_OPTIONS }}"

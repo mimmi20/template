@@ -12,10 +12,6 @@ env:
   COMPOSER_OPTIONS: "--optimize-autoloader --prefer-dist --prefer-stable -v"
   TOOLS: "composer:v2"
 
-concurrency:
-  group: ${{ github.head_ref }}
-  cancel-in-progress: true
-
 jobs:
   validate:
     name: "Validate composer"

@@ -16,7 +16,7 @@ updates:
       - "mimmi20"
     labels:
       - "dependencies"
-    versioning-strategy: increase
+    versioning-strategy: "widen"
     commit-message:
       include: "scope"
       prefix: "composer"
@@ -41,7 +41,7 @@ updates:
       - "mimmi20"
     labels:
       - "dependencies"
-    versioning-strategy: increase
+    versioning-strategy: "widen"
     commit-message:
       include: "scope"
       prefix: "composer"
@@ -59,7 +59,7 @@ updates:
       - "mimmi20"
     labels:
       - "dependencies"
-    versioning-strategy: increase
+    versioning-strategy: "widen"
     commit-message:
       include: "scope"
       prefix: "composer"
@@ -77,7 +77,7 @@ updates:
       - "mimmi20"
     labels:
       - "dependencies"
-    versioning-strategy: increase
+    versioning-strategy: "widen"
     commit-message:
       include: "scope"
       prefix: "composer"

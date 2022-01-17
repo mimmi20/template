@@ -1,6 +1,6 @@
 {
   "require": {
-    "mimmi20/coding-standard": "2.6.0"
+    "mimmi20/coding-standard": "2.6.1"
   },
   "minimum-stability": "stable",
   "prefer-stable": true,

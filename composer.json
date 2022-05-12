@@ -20,12 +20,12 @@
     "ext-mbstring": "*"
   },
   "require-dev": {
-    "mimmi20/coding-standard": "^2.6.2",
+    "mimmi20/coding-standard": "^2.8.0",
     "phpstan/extension-installer": "^1.1.0",
-    "phpstan/phpstan": "^1.4.2",
+    "phpstan/phpstan": "^1.6.8",
     "phpstan/phpstan-deprecation-rules": "^1.0.0",
-    "phpstan/phpstan-phpunit": "^1.0.0",
-    "phpunit/phpunit": "^9.5.12"
+    "phpstan/phpstan-phpunit": "^1.1.1",
+    "phpunit/phpunit": "^9.5.20"
   },
   "config": {
     "preferred-install": "dist",

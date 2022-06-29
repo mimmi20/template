@@ -10,19 +10,17 @@
 [![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/mimmi20/template.svg)](http://isitmaintained.com/project/mimmi20/template "Average time to resolve an issue")
 [![Percentage of issues still open](http://isitmaintained.com/badge/open/mimmi20/template.svg)](http://isitmaintained.com/project/mimmi20/template "Percentage of issues still open")
 
-## Installation
+## Requirements
 
-:bulb: This is a great place for showing how to install the package, see below:
+This library requires PHP 8.1+.
+
+## Installation
 
 Run
 
+```shell
+composer require mimmi20/template
 ```
-$ composer require mimmi20/template
-```
-
-## Usage
-
-:bulb: This is a great place for showing a few usage examples!
 
 ## License
 

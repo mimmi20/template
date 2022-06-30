@@ -7,8 +7,6 @@ updates:
     directory: "/"
     schedule:
       interval: "daily"
-      time: "04:00"
-      timezone: "Europe/Berlin"
     open-pull-requests-limit: 10
     reviewers:
       - "mimmi20"
@@ -32,8 +30,6 @@ updates:
     directory: "/"
     schedule:
       interval: "daily"
-      time: "04:00"
-      timezone: "Europe/Berlin"
     open-pull-requests-limit: 10
     reviewers:
       - "mimmi20"

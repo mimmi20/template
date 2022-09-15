@@ -24,12 +24,12 @@
     "ext-mbstring": "*"
   },
   "require-dev": {
-    "mimmi20/coding-standard": "^3.0.10",
-    "phpstan/extension-installer": "^1.1.0",
+    "mimmi20/coding-standard": "3.0.10",
+    "phpstan/extension-installer": "1.1.0",
     "phpstan/phpstan": "^1.8.5",
     "phpstan/phpstan-deprecation-rules": "^1.0.0",
     "phpstan/phpstan-phpunit": "^1.1.1",
-    "phpunit/phpunit": "^9.5.24"
+    "phpunit/phpunit": "9.5.24"
   },
   "minimum-stability": "stable",
   "prefer-stable": true,

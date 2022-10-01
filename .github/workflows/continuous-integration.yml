@@ -3,8 +3,8 @@
 name: "Continuous Integration"
 
 on:
-  pull_request:
-  push:
+  - pull_request
+  - push
 
 permissions:
   contents: read
@@ -14,22 +14,16 @@ concurrency:
   group: '${{ github.workflow }} @ ${{ github.event.pull_request.head.label || github.head_ref || github.ref }}'
   cancel-in-progress: true
 
-env:
-  PHP_EXTENSIONS: "json, opcache"
-  PHP_INI_VALUES: "opcache.enable=1, opcache.fast_shutdown=0, zend.assertions=1, assert.exception=On, intl.default_locale=de, intl.use_exceptions=1, zend.exception_ignore_args=0"
-  COMPOSER_OPTIONS: "--optimize-autoloader --prefer-dist --prefer-stable -v"
-  TOOLS: "composer:v2"
-
 jobs:
   ci:
     name: "Run CI"
 
     uses: "./.github/workflows/ci.yml"
     with:
-      extensions: "${{ env.PHP_EXTENSIONS }}"
-      ini-values: "${{ env.PHP_INI_VALUES }}"
-      composer-options: "${{ env.COMPOSER_OPTIONS }}"
+      extensions: "json, opcache"
+      ini-values: "opcache.enable=1, opcache.fast_shutdown=0, zend.assertions=1, assert.exception=On, intl.default_locale=de, intl.use_exceptions=1, zend.exception_ignore_args=0"
+      composer-options: "--optimize-autoloader --prefer-dist --prefer-stable -v"
       min-covered-msi: 84
       min-msi: 84
     secrets:
-      envPAT: ${{ secrets.GITHUB_TOKEN }}
+      envPAT: "${{ secrets.GITHUB_TOKEN }}"

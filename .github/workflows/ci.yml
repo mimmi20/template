@@ -45,8 +45,7 @@ jobs:
       extensions: ${{ steps.supported-versions-matrix.outputs.extensions }}
       version: ${{ steps.supported-versions-matrix.outputs.version }}
       version-all: ${{ steps.supported-versions-matrix-all.outputs.version }}
-      upcoming: ${{ steps.supported-versions-matrix.outputs.upcoming }}
-      upcoming-all: ${{ steps.supported-versions-matrix-all.outputs.upcoming }}
+      upcoming: ${{ steps.supported-versions-matrix-all.outputs.upcoming }}
 
     steps:
       - name: "Checkout"
@@ -114,7 +113,7 @@ jobs:
 
     runs-on: "${{ matrix.operating-system }}"
     timeout-minutes: 10
-    continue-on-error: ${{ needs.supported-versions-matrix.outputs.upcoming-all == matrix.php-version }}
+    continue-on-error: ${{ needs.supported-versions-matrix.outputs.upcoming == matrix.php-version }}
 
     strategy:
       fail-fast: false
@@ -130,33 +129,7 @@ jobs:
           - "highest"
           - "lowest"
 
-        composer-options:
-          - ""
-
-        include:
-          - operating-system: "ubuntu-20.04"
-            php-version: "8.2"
-            dependencies: "highest"
-            composer-options: " --ignore-platform-reqs"
-          - operating-system: "ubuntu-20.04"
-            php-version: "8.2"
-            dependencies: "lowest"
-            composer-options: " --ignore-platform-reqs"
-          - operating-system: "ubuntu-22.04"
-            php-version: "8.2"
-            dependencies: "highest"
-            composer-options: " --ignore-platform-reqs"
-          - operating-system: "ubuntu-22.04"
-            php-version: "8.2"
-            dependencies: "lowest"
-            composer-options: " --ignore-platform-reqs"
-
     steps:
-      - run: |
-          echo "upcoming:     ${{ needs.supported-versions-matrix.outputs.upcoming }}"
-      - run: |
-          echo "upcoming-all: ${{ needs.supported-versions-matrix.outputs.upcoming-all }}"
-
       - name: "Checkout"
         uses: "actions/checkout@v3"
         with:
@@ -175,10 +148,18 @@ jobs:
           tools: "${{ env.TOOLS }}"
 
       - name: "Update dependencies with composer"
+        if: ${{ needs.supported-versions-matrix.outputs.upcoming != matrix.php-version }}
         uses: "ramsey/composer-install@v1"
         with:
           dependency-versions: "${{ matrix.dependencies }}"
-          composer-options: "${{ inputs.composer-options }}${{ matrix.composer-options }}"
+          composer-options: "${{ inputs.composer-options }}"
+
+      - name: "Update dependencies with composer"
+        if: ${{ needs.supported-versions-matrix.outputs.upcoming == matrix.php-version }}
+        uses: "ramsey/composer-install@v1"
+        with:
+          dependency-versions: "${{ matrix.dependencies }}"
+          composer-options: "${{ inputs.composer-options }} --ignore-platform-reqs"
 
       - name: "Check dependencies with composer"
         run: "composer outdated --direct${{ inputs.composer-outdated-option }}"

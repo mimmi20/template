@@ -24,7 +24,7 @@ jobs:
   ci:
     name: "Validate composer"
 
-    uses: "./.github/workflows/ci.yml@updates"
+    uses: "./.github/workflows/ci.yml"
     with:
       extensions: "${{ env.PHP_EXTENSIONS }}"
       ini-values: "${{ env.PHP_INI_VALUES }}"

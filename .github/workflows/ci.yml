@@ -1,6 +1,6 @@
 # https://help.github.com/en/categories/automating-your-workflow-with-github-actions
 
-name: "CI"
+name: "Continuous Integration"
 
 on:
   workflow_call:
@@ -22,6 +22,10 @@ on:
         required: false
         type: number
         default: 100
+      composer-outdated-option:
+        required: false
+        type: string
+        default: ""
     secrets:
       envPAT:
         required: true
@@ -164,7 +168,7 @@ jobs:
           composer-options: "${{ inputs.composer-options }}${{ matrix.composer-options }}"
 
       - name: "Check dependencies with composer"
-        run: "composer outdated --direct"
+        run: "composer outdated --direct${{ inputs.composer-outdated-option }}"
 
   mega-lint:
     name: "Linting with nvuillam/mega-linter"
@@ -263,6 +267,8 @@ jobs:
   php-cs-fixer:
     name: "Check Coding Standards with PHP-CS-Fixer"
 
+    if: needs.supported-versions-matrix.outputs.upcoming != matrix.php
+
     needs:
       - "supported-versions-matrix"
       - "mega-lint"
@@ -311,6 +317,8 @@ jobs:
 
   phpcs:
     name: "Check Coding Standards with PHPCS"
+
+    if: needs.supported-versions-matrix.outputs.upcoming != matrix.php
 
     needs:
       - "supported-versions-matrix"
@@ -361,6 +369,8 @@ jobs:
   static-code-analysis:
     name: "Static Code Analysis with PHPStan"
 
+    if: needs.supported-versions-matrix.outputs.upcoming != matrix.php
+
     needs:
       - "supported-versions-matrix"
       - "mega-lint"
@@ -409,6 +419,8 @@ jobs:
 
   tests:
     name: "UnitTests with PHPUnit"
+
+    if: needs.supported-versions-matrix.outputs.upcoming != matrix.php
 
     needs:
       - "supported-versions-matrix"
@@ -462,6 +474,8 @@ jobs:
 
   code-coverage:
     name: "Code Coverage with PHPUnit"
+
+    if: needs.supported-versions-matrix.outputs.upcoming != matrix.php
 
     needs:
       - "supported-versions-matrix"

@@ -26,14 +26,6 @@ on:
       envPAT:
         required: true
 
-permissions:
-  contents: read
-
-# This allows a subsequently queued workflow run to interrupt previous runs
-concurrency:
-  group: '${{ github.workflow }} @ ${{ github.event.pull_request.head.label || github.head_ref || github.ref }}'
-  cancel-in-progress: true
-
 env:
   TOOLS: "composer:v2"
 

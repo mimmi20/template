@@ -44,7 +44,8 @@ jobs:
     outputs:
       extensions: ${{ steps.supported-versions-matrix.outputs.extensions }}
       version: ${{ steps.supported-versions-matrix.outputs.version }}
-      upcoming: ${{ steps.supported-versions-matrix.outputs.upcoming }}
+      version-all: ${{ steps.supported-versions-matrix-all.outputs.version }}
+      upcoming: ${{ steps.supported-versions-matrix-all.outputs.upcoming }}
 
     steps:
       - name: "Checkout"
@@ -55,8 +56,14 @@ jobs:
           lfs: false
           persist-credentials: false
 
-      - name: "detect supported versions"
+      - name: "detect supported versions without upcoming versions"
         id: "supported-versions-matrix"
+        uses: "WyriHaximus/github-action-composer-php-versions-in-range@v1"
+        with:
+          upcomingReleases: false
+
+      - name: "detect supported versions with upcoming versions"
+        id: "supported-versions-matrix-all"
         uses: "WyriHaximus/github-action-composer-php-versions-in-range@v1"
         with:
           upcomingReleases: true
@@ -116,7 +123,7 @@ jobs:
           - "ubuntu-20.04"
           - "ubuntu-22.04"
 
-        php-version: ${{ fromJson(needs.supported-versions-matrix.outputs.version) }}
+        php-version: ${{ fromJson(needs.supported-versions-matrix.outputs.version-all) }}
 
         dependencies:
           - "highest"
@@ -267,8 +274,6 @@ jobs:
   php-cs-fixer:
     name: "Check Coding Standards with PHP-CS-Fixer"
 
-    if: ${{ needs.supported-versions-matrix.outputs.upcoming != matrix.php-version }}
-
     needs:
       - "supported-versions-matrix"
       - "mega-lint"
@@ -317,8 +322,6 @@ jobs:
 
   phpcs:
     name: "Check Coding Standards with PHPCS"
-
-    if: ${{ needs.supported-versions-matrix.outputs.upcoming != matrix.php-version }}
 
     needs:
       - "supported-versions-matrix"
@@ -369,8 +372,6 @@ jobs:
   static-code-analysis:
     name: "Static Code Analysis with PHPStan"
 
-    if: ${{ needs.supported-versions-matrix.outputs.upcoming != matrix.php-version }}
-
     needs:
       - "supported-versions-matrix"
       - "mega-lint"
@@ -419,8 +420,6 @@ jobs:
 
   tests:
     name: "UnitTests with PHPUnit"
-
-    if: ${{ needs.supported-versions-matrix.outputs.upcoming != matrix.php-version }}
 
     needs:
       - "supported-versions-matrix"
@@ -474,8 +473,6 @@ jobs:
 
   code-coverage:
     name: "Code Coverage with PHPUnit"
-
-    if: ${{ needs.supported-versions-matrix.outputs.upcoming != matrix.php-version }}
 
     needs:
       - "supported-versions-matrix"

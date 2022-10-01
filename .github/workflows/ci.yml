@@ -267,7 +267,7 @@ jobs:
   php-cs-fixer:
     name: "Check Coding Standards with PHP-CS-Fixer"
 
-    if: needs.supported-versions-matrix.outputs.upcoming != matrix.php
+    if: needs.supported-versions-matrix.outputs.upcoming != matrix.php-version
 
     needs:
       - "supported-versions-matrix"
@@ -318,7 +318,7 @@ jobs:
   phpcs:
     name: "Check Coding Standards with PHPCS"
 
-    if: needs.supported-versions-matrix.outputs.upcoming != matrix.php
+    if: needs.supported-versions-matrix.outputs.upcoming != matrix.php-version
 
     needs:
       - "supported-versions-matrix"
@@ -369,7 +369,7 @@ jobs:
   static-code-analysis:
     name: "Static Code Analysis with PHPStan"
 
-    if: needs.supported-versions-matrix.outputs.upcoming != matrix.php
+    if: needs.supported-versions-matrix.outputs.upcoming != matrix.php-version
 
     needs:
       - "supported-versions-matrix"
@@ -420,7 +420,7 @@ jobs:
   tests:
     name: "UnitTests with PHPUnit"
 
-    if: needs.supported-versions-matrix.outputs.upcoming != matrix.php
+    if: needs.supported-versions-matrix.outputs.upcoming != matrix.php-version
 
     needs:
       - "supported-versions-matrix"
@@ -475,7 +475,7 @@ jobs:
   code-coverage:
     name: "Code Coverage with PHPUnit"
 
-    if: needs.supported-versions-matrix.outputs.upcoming != matrix.php
+    if: needs.supported-versions-matrix.outputs.upcoming != matrix.php-version
 
     needs:
       - "supported-versions-matrix"

@@ -15,7 +15,7 @@ jobs:
 
     uses: "./.github/workflows/ci.yml"
     with:
-      extensions: "json, opcache"
+      extensions: ""
       ini-values: "opcache.enable=1, opcache.fast_shutdown=0, zend.assertions=1, assert.exception=On, intl.default_locale=de, intl.use_exceptions=1, zend.exception_ignore_args=0"
       composer-options: "--optimize-autoloader --prefer-dist --prefer-stable -v"
       composer-outdated-option: ""
@@ -58,8 +58,8 @@ jobs:
         uses: "shivammathur/setup-php@2.21.2"
         with:
           php-version: "${{ matrix.php-version }}"
-          extensions: "none, phar, json, opcache, ${{ join(fromJson(needs.ci.outputs.extensions), ', ') }}, ${{ inputs.extensions }}"
-          ini-values: "${{ inputs.ini-values }}"
+          extensions: "none, phar, json, opcache, ${{ join(fromJson(needs.ci.outputs.extensions), ', ') }}"
+          ini-values: "opcache.enable=1, opcache.fast_shutdown=0, zend.assertions=1, assert.exception=On, intl.default_locale=de, intl.use_exceptions=1, zend.exception_ignore_args=0"
           coverage: "none"
           tools: "${{ env.TOOLS }}"
 
@@ -67,7 +67,7 @@ jobs:
         uses: "ramsey/composer-install@v1"
         with:
           dependency-versions: "${{ matrix.dependencies }}"
-          composer-options: "${{ inputs.composer-options }}"
+          composer-options: "--optimize-autoloader --prefer-dist --prefer-stable -v"
 
       - name: "Run unit tests with phpunit/phpunit"
         run: "vendor/bin/phpunit -c phpunit.xml --no-coverage"
@@ -110,8 +110,8 @@ jobs:
         uses: "shivammathur/setup-php@2.21.2"
         with:
           php-version: "${{ matrix.php-version }}"
-          extensions: "none, phar, json, opcache, ${{ join(fromJson(needs.ci.outputs.extensions), ', ') }}, ${{ inputs.extensions }}"
-          ini-values: "${{ inputs.ini-values }}"
+          extensions: "none, phar, json, opcache, ${{ join(fromJson(needs.ci.outputs.extensions), ', ') }}"
+          ini-values: "opcache.enable=1, opcache.fast_shutdown=0, zend.assertions=1, assert.exception=On, intl.default_locale=de, intl.use_exceptions=1, zend.exception_ignore_args=0"
           coverage: "xdebug"
           tools: "${{ env.TOOLS }}, infection"
 
@@ -119,7 +119,7 @@ jobs:
         uses: "ramsey/composer-install@v1"
         with:
           dependency-versions: "${{ matrix.dependencies }}"
-          composer-options: "${{ inputs.composer-options }}"
+          composer-options: "--optimize-autoloader --prefer-dist --prefer-stable -v"
 
       - name: "Create cache directory for phpunit/phpunit"
         run: "mkdir -p .build/coverage"

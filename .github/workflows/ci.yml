@@ -32,9 +32,6 @@ on:
       upcoming:
         value: ${{ jobs.supported-versions-matrix.outputs.upcoming }}
 
-env:
-  TOOLS: "composer:v2"
-
 jobs:
   supported-versions-matrix:
     name: "Supported Versions Matrix"
@@ -101,7 +98,7 @@ jobs:
           extensions: "none, phar, json, opcache, ${{ join(fromJson(needs.supported-versions-matrix.outputs.extensions), ', ') }}, ${{ inputs.extensions }}"
           ini-values: "${{ inputs.ini-values }}"
           coverage: "none"
-          tools: "${{ env.TOOLS }}"
+          tools: "composer:v2"
 
       - name: "Validate composer.json"
         run: "composer validate --strict"
@@ -147,7 +144,7 @@ jobs:
           extensions: "none, phar, json, opcache, ${{ join(fromJson(needs.supported-versions-matrix.outputs.extensions), ', ') }}, ${{ inputs.extensions }}"
           ini-values: "${{ inputs.ini-values }}"
           coverage: "none"
-          tools: "${{ env.TOOLS }}"
+          tools: "composer:v2"
 
       - name: "Update dependencies with composer"
         if: ${{ needs.supported-versions-matrix.outputs.upcoming != matrix.php-version }}
@@ -203,7 +200,7 @@ jobs:
           extensions: "none, phar, json, opcache, ${{ join(fromJson(needs.supported-versions-matrix.outputs.extensions), ', ') }}, ${{ inputs.extensions }}"
           ini-values: "${{ inputs.ini-values }}"
           coverage: "none"
-          tools: "${{ env.TOOLS }}"
+          tools: "composer:v2"
 
       - name: "Update dependencies with composer"
         uses: "ramsey/composer-install@v1"
@@ -255,7 +252,7 @@ jobs:
           extensions: "none, phar, json, opcache, ${{ join(fromJson(needs.supported-versions-matrix.outputs.extensions), ', ') }}, ${{ inputs.extensions }}"
           ini-values: "${{ inputs.ini-values }}"
           coverage: "none"
-          tools: "${{ env.TOOLS }}"
+          tools: "composer:v2"
 
       - name: "Lint PHP"
         uses: "overtrue/phplint@8.1"
@@ -298,7 +295,7 @@ jobs:
           extensions: "none, phar, json, opcache, ${{ join(fromJson(needs.supported-versions-matrix.outputs.extensions), ', ') }}, ${{ inputs.extensions }}"
           ini-values: "${{ inputs.ini-values }}"
           coverage: "none"
-          tools: "${{ env.TOOLS }}, cs2pr"
+          tools: "composer:v2, cs2pr"
 
       - name: "Update dependencies with composer"
         uses: "ramsey/composer-install@v1"
@@ -347,7 +344,7 @@ jobs:
           extensions: "none, phar, json, opcache, ${{ join(fromJson(needs.supported-versions-matrix.outputs.extensions), ', ') }}, ${{ inputs.extensions }}"
           ini-values: "${{ inputs.ini-values }}"
           coverage: "none"
-          tools: "${{ env.TOOLS }}, cs2pr"
+          tools: "composer:v2, cs2pr"
 
       - name: "Update dependencies with composer"
         uses: "ramsey/composer-install@v1"
@@ -396,7 +393,7 @@ jobs:
           extensions: "none, phar, json, opcache, ${{ join(fromJson(needs.supported-versions-matrix.outputs.extensions), ', ') }}, ${{ inputs.extensions }}"
           ini-values: "${{ inputs.ini-values }}"
           coverage: "none"
-          tools: "${{ env.TOOLS }}"
+          tools: "composer:v2"
 
       - name: "Update dependencies with composer"
         uses: "ramsey/composer-install@v1"

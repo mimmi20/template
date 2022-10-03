@@ -24,6 +24,12 @@
     "ext-mbstring": "*"
   },
   "require-dev": {
+    "ext-ctype": "*",
+    "ext-dom": "*",
+    "ext-simplexml": "*",
+    "ext-tokenizer": "*",
+    "ext-xml": "*",
+    "ext-xmlwriter": "*",
     "mimmi20/coding-standard": "^3.0.12",
     "phpstan/extension-installer": "^1.1.0",
     "phpstan/phpstan": "^1.8.6",

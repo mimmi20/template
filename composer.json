@@ -24,6 +24,8 @@
     "ext-mbstring": "*"
   },
   "require-dev": {
+    "ext-dom": "*",
+    "ext-tokenizer": "*",
     "mimmi20/coding-standard": "^3.0.12",
     "phpstan/extension-installer": "^1.1.0",
     "phpstan/phpstan": "^1.8.6",

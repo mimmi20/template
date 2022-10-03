@@ -29,6 +29,15 @@ on:
     secrets:
       envPAT:
         required: true
+    outputs:
+      extensions:
+        value: ${{ jobs.supported-versions-matrix.outputs.extensions }}
+      version:
+        value: ${{ jobs.supported-versions-matrix.outputs.version }}
+      version-all:
+        value: ${{ jobs.supported-versions-matrix.outputs.version-all }}
+      upcoming:
+        value: ${{ jobs.supported-versions-matrix.outputs.upcoming }}
 
 env:
   TOOLS: "composer:v2"

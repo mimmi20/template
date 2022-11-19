@@ -302,6 +302,10 @@ jobs:
           composer-options: "${{ inputs.composer-options }}"
 
       - name: "Run friendsofphp/php-cs-fixer"
+        run: "vendor/bin/php-cs-fixer fix --dry-run -vv"
+        continue-on-error: true
+
+      - name: "Run friendsofphp/php-cs-fixer"
         run: "vendor/bin/php-cs-fixer fix --dry-run --format=checkstyle | cs2pr"
 
   phpcs:

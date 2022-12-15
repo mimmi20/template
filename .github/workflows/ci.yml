@@ -275,7 +275,9 @@ jobs:
           - "ubuntu-20.04"
           - "ubuntu-22.04"
 
-        php-version: ${{ fromJson(needs.supported-versions-matrix.outputs.version) }}
+        #php-version: ${{ fromJson(needs.supported-versions-matrix.outputs.version) }}
+        php-version:
+          - "8.1"
 
     steps:
       - name: "Checkout"

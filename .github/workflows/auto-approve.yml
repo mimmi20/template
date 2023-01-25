@@ -13,7 +13,6 @@ on:
       envPAT:
         required: true
     description: Pull request number to auto-approve
-    required: false
 
 jobs:
   auto-approve:

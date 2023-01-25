@@ -13,22 +13,21 @@ on:
       - "completed"
   status: {}
 jobs:
-  automerge:
-    runs-on: "ubuntu-22.04"
+  approve:
+    uses: "./.github/workflows/auto-approve.yml"
+
     if: ${{ github.actor == 'dependabot[bot]' }}
-    steps:
-      #- name: "Sleep for 10 minutes to allow builds to be queued up"
-      #  run: "sleep 10m"
-      #  shell: "bash"
-      - name: "Dependabot metadata"
-        id: "metadata"
-        uses: "dependabot/fetch-metadata@v1.3.5"
-        with:
-          github-token: "${{ secrets.GITHUB_TOKEN }}"
-      - id: "automerge"
-        name: "automerge"
-        if: ${{steps.metadata.outputs.update-type == 'version-update:semver-minor' || steps.metadata.outputs.update-type == 'version-update:semver-patch'}}
-        uses: "pascalgn/automerge-action@v0.15.5"
-        env:
-          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
-          MERGE_METHOD: "squash"
+
+    with:
+      pullRequestNumber: "${{ github.event.pull_request.number }}"
+    secrets:
+      envPAT: "${{ secrets.GITHUB_TOKEN }}"
+  automerge:
+    needs: "approve"
+
+    uses: "./.github/workflows/auto-merge.yml"
+
+    with:
+      pullRequestNumber: "${{ github.event.pull_request.number }}"
+    secrets:
+      envPAT: "${{ secrets.GITHUB_TOKEN }}"

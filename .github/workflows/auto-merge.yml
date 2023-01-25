@@ -1,0 +1,34 @@
+name: "Auto merge"
+
+permissions:
+  pull-requests: write
+  contents: write
+
+on:
+  workflow_call:
+    inputs:
+      pullRequestNumber:
+        required: true
+        type: string
+    secrets:
+      envPAT:
+        required: true
+    description: Pull request number to auto-approve
+    required: false
+
+jobs:
+  automerge:
+    runs-on: "ubuntu-22.04"
+    steps:
+      - name: "Dependabot metadata"
+        id: "metadata"
+        uses: "dependabot/fetch-metadata@v1.3.5"
+        with:
+          github-token: ${{ secrets.envPAT }}
+      - id: "automerge"
+        name: "automerge"
+        if: ${{steps.metadata.outputs.update-type == 'version-update:semver-minor' || steps.metadata.outputs.update-type == 'version-update:semver-patch'}}
+        uses: "pascalgn/automerge-action@v0.15.5"
+        env:
+          GITHUB_TOKEN: ${{ secrets.envPAT }}
+          MERGE_METHOD: "squash"

@@ -1,0 +1,24 @@
+name: "Auto approve"
+
+on:
+  workflow_call:
+    inputs:
+      pullRequestNumber:
+        required: true
+        type: string
+    secrets:
+      envPAT:
+        required: true
+    description: Pull request number to auto-approve
+    required: false
+
+jobs:
+  auto-approve:
+    runs-on: "ubuntu-22.04"
+    permissions:
+      pull-requests: write
+    steps:
+      - uses: "hmarr/auto-approve-action@v3"
+        with:
+          pull-request-number: "${{ inputs.pullRequestNumber }}"
+          github-token: ${{ secrets.envPAT }}

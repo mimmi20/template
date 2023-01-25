@@ -12,7 +12,6 @@ on:
     secrets:
       envPAT:
         required: true
-    description: Pull request number to auto-approve
 
 jobs:
   auto-approve:

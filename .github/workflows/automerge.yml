@@ -4,14 +4,8 @@ permissions:
   pull-requests: write
   contents: write
 
-on:
-  pull_request_target:
-    types:
-      - "labeled"
-  check_suite:
-    types:
-      - "completed"
-  status: {}
+on: pull_request_target
+
 jobs:
   approve:
     uses: "./.github/workflows/auto-approve.yml"

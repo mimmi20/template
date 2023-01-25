@@ -8,9 +8,6 @@ on:
   pull_request_target:
     types:
       - "labeled"
-  check_suite:
-    types:
-      - "completed"
   status: {}
 jobs:
   approve:

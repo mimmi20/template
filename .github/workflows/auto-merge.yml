@@ -6,15 +6,9 @@ permissions:
 
 on:
   workflow_call:
-    inputs:
-      pullRequestNumber:
-        required: true
-        type: string
     secrets:
       envPAT:
         required: true
-    description: Pull request number to auto-approve
-    required: false
 
 jobs:
   automerge:

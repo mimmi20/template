@@ -6,6 +6,10 @@ permissions:
 
 on:
   workflow_call:
+    inputs:
+      pullRequestUrl:
+        required: true
+        type: string
     secrets:
       envPAT:
         required: true
@@ -13,16 +17,21 @@ on:
 jobs:
   automerge:
     runs-on: "ubuntu-22.04"
+    
     steps:
       - name: "Dependabot metadata"
         id: "metadata"
+
         uses: "dependabot/fetch-metadata@v1.3.5"
+
         with:
           github-token: ${{ secrets.envPAT }}
-      - id: "automerge"
-        name: "automerge"
+
+      - name: "Enable auto-merge for Dependabot PRs"
         if: ${{steps.metadata.outputs.update-type == 'version-update:semver-minor' || steps.metadata.outputs.update-type == 'version-update:semver-patch'}}
-        uses: "pascalgn/automerge-action@v0.15.5"
+
+        run: gh pr merge --auto --merge "$PR_URL"
+
         env:
+          PR_URL: "${{ inputs.pullRequestUrl }}"
           GITHUB_TOKEN: ${{ secrets.envPAT }}
-          MERGE_METHOD: "squash"

@@ -36,4 +36,4 @@ jobs:
 
     steps:
       - name: "print something about github info"
-        run: "echo 'repo-event-workflow-ref: ${{ github.repository }}-${{ github.event_name }}-${{ github.workflow }}-${{ github.base_ref }}-${{ github.ref }}'"
+        run: "echo 'repo-event-workflow-ref: ${{ github.repository }}-${{ github.event_name }}-${{ github.workflow }}-${{ github.base_ref || github.run_id }}-${{ github.head_ref || github.run_id }}-${{ github.ref }}'"

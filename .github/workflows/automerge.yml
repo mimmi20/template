@@ -27,13 +27,3 @@ jobs:
 
     secrets:
       envPAT: "${{ secrets.GITHUB_TOKEN }}"
-  test:
-    name: "Test"
-
-    runs-on: "ubuntu-22.04"
-    timeout-minutes: 10
-    continue-on-error: false
-
-    steps:
-      - name: "print something about github info"
-        run: "echo 'repo-event-workflow-ref: ${{ github.repository }}-${{ github.event_name }}-${{ github.workflow }}-${{ github.base_ref || github.run_id }}-${{ github.head_ref || github.run_id }}-${{ github.ref }}'"

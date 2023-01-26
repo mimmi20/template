@@ -32,4 +32,4 @@ jobs:
 
     steps:
       - name: "print something about github info"
-        run: "echo 'env: ${{ github.env }} event: ${{ github.event_name }} repo: {{ github.repository }} workflow-ref: ${{ github.workflow }}-${{ github.ref }}'"
+        run: "echo 'repo-event-workflow-ref: ${{ github.repository }}-${{ github.event_name }}-${{ github.workflow }}-${{ github.base_ref }}-${{ github.ref }}'"

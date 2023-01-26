@@ -13,13 +13,17 @@ jobs:
     if: ${{ github.actor == 'dependabot[bot]' }}
 
     with:
-      pullRequestNumber: "${{ github.event.pull_request.number }}"
+      pullRequestUrl: "${{ github.event.pull_request.html_url }}"
+
     secrets:
       envPAT: "${{ secrets.GITHUB_TOKEN }}"
   automerge:
     needs: "approve"
 
     uses: "./.github/workflows/auto-merge.yml"
+
+    with:
+      pullRequestUrl: "${{ github.event.pull_request.html_url }}"
 
     secrets:
       envPAT: "${{ secrets.GITHUB_TOKEN }}"
@@ -32,4 +36,4 @@ jobs:
 
     steps:
       - name: "print something about github info"
-        run: "echo 'env: ${{ github.env }} event: ${{ github.event_name }} repo: {{ github.repository }} workflow-ref: ${{ github.workflow }}-${{ github.ref }}'"
+        run: "echo 'repo-event-workflow-ref: ${{ github.repository }}-${{ github.event_name }}-${{ github.workflow }}-${{ github.base_ref || github.run_id }}-${{ github.head_ref || github.run_id }}-${{ github.ref }}'"

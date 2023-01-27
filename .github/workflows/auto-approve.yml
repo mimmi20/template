@@ -40,12 +40,11 @@ jobs:
         run: echo ${{ steps.metadata.outputs.update-type }}
 
       - name: "Approve patch and minor updates"
-        if: ${{steps.metadata.outputs.update-type == 'version-update:semver-minor' || steps.metadata.outputs.update-type == 'version-update:semver-patch'}}
 
         run: |
           gh pr checkout "$PR_URL" # sets the upstream metadata for `gh pr status`
           if [ "$(gh pr status --json reviewDecision -q .currentBranch.reviewDecision)" != "APPROVED" ];
-          then gh pr review "$PR_URL" --approve -b "I'm **approving** this pull request because **it includes a patch or minor update**"
+          then gh pr review --approve "$PR_URL"
           else echo "PR already approved, skipping additional approvals to minimize emails/notification noise.";
           fi
 

@@ -10,9 +10,6 @@ on:
       pullRequestUrl:
         required: true
         type: string
-      pullRequestEmail:
-        required: true
-        type: string
     secrets:
       envPAT:
         required: true
@@ -37,9 +34,8 @@ jobs:
       - name: "Enable auto-merge for Dependabot PRs"
         if: ${{steps.metadata.outputs.update-type == 'version-update:semver-minor' || steps.metadata.outputs.update-type == 'version-update:semver-patch'}}
 
-        run: gh pr merge --auto --squash "$PR_URL" --author-email "$PR_EMAIL"
+        run: gh pr merge --auto --merge "$PR_URL"
 
         env:
           PR_URL: "${{ inputs.pullRequestUrl }}"
-          PR_EMAIL: "${{ inputs.pullRequestEmail }}"
           GITHUB_TOKEN: ${{ secrets.envPAT }}

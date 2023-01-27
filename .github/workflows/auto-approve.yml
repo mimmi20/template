@@ -27,6 +27,10 @@ jobs:
         with:
           github-token: ${{ secrets.envPAT }}
 
+      - name: "print update-type"
+
+        run: echo ${{ steps.metadata.outputs.update-type }}
+
       - name: "Approve patch and minor updates"
         if: ${{steps.metadata.outputs.update-type == 'version-update:semver-minor' || steps.metadata.outputs.update-type == 'version-update:semver-patch'}}
 

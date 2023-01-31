@@ -253,7 +253,7 @@ jobs:
           tools: "composer:v2"
 
       - name: "Lint PHP"
-        uses: "overtrue/phplint@8.2"
+        uses: "overtrue/phplint@6.1.0"
 
   php-cs-fixer:
     name: "Check Coding Standards with PHP-CS-Fixer"

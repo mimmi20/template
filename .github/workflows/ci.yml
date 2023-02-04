@@ -376,6 +376,8 @@ jobs:
 
     runs-on: "ubuntu-22.04"
 
+    if: always()
+
     needs:
       - "validate"
       - "mega-lint"

@@ -20,55 +20,10 @@ on:
     secrets:
       envPAT:
         required: true
-    outputs:
-      extensions:
-        value: ${{ jobs.supported-versions-matrix.outputs.extensions }}
-      version:
-        value: ${{ jobs.supported-versions-matrix.outputs.version }}
-      version-all:
-        value: ${{ jobs.supported-versions-matrix.outputs.version-all }}
-      upcoming:
-        value: ${{ jobs.supported-versions-matrix.outputs.upcoming }}
 
 jobs:
-  supported-versions-matrix:
-    name: "Supported Versions Matrix"
-
-    runs-on: "ubuntu-20.04"
-    timeout-minutes: 10
-    continue-on-error: false
-
-    outputs:
-      extensions: ${{ steps.supported-versions-matrix.outputs.extensions }}
-      version: ${{ steps.supported-versions-matrix.outputs.version }}
-      version-all: ${{ steps.supported-versions-matrix-all.outputs.version }}
-      upcoming: ${{ steps.supported-versions-matrix-all.outputs.upcoming }}
-
-    steps:
-      - name: "Checkout"
-        uses: "actions/checkout@v3"
-        with:
-          # Disabling shallow clone is recommended for improving relevancy of reporting
-          fetch-depth: 0
-          lfs: false
-          persist-credentials: false
-
-      - name: "detect supported versions without upcoming versions"
-        id: "supported-versions-matrix"
-        uses: "WyriHaximus/github-action-composer-php-versions-in-range@v1"
-        with:
-          upcomingReleases: false
-
-      - name: "detect supported versions with upcoming versions"
-        id: "supported-versions-matrix-all"
-        uses: "WyriHaximus/github-action-composer-php-versions-in-range@v1"
-        with:
-          upcomingReleases: true
-
   validate:
     name: "Validate composer"
-
-    needs: "supported-versions-matrix"
 
     runs-on: "ubuntu-20.04"
     timeout-minutes: 10
@@ -78,7 +33,8 @@ jobs:
       fail-fast: false
 
       matrix:
-        php-version: ${{ fromJson(needs.supported-versions-matrix.outputs.version) }}
+        php-version:
+          - "8.1"
 
     steps:
       - name: "Checkout"
@@ -93,7 +49,7 @@ jobs:
         uses: "shivammathur/setup-php@2.24.0"
         with:
           php-version: "${{ matrix.php-version }}"
-          extensions: "none, phar, json, opcache, ${{ join(fromJson(needs.supported-versions-matrix.outputs.extensions), ', ') }}, ${{ inputs.extensions }}"
+          extensions: "none, phar, json, opcache, ${{ inputs.extensions }}"
           ini-values: "${{ inputs.ini-values }}"
           coverage: "none"
           tools: "composer:v2"
@@ -104,13 +60,11 @@ jobs:
   install:
     name: "Install dependencies"
 
-    needs:
-      - "supported-versions-matrix"
-      - "validate"
+    needs: "validate"
 
     runs-on: "${{ matrix.operating-system }}"
     timeout-minutes: 10
-    continue-on-error: ${{ needs.supported-versions-matrix.outputs.upcoming == matrix.php-version }}
+    continue-on-error: ${{ '8.3' == matrix.php-version }}
 
     strategy:
       fail-fast: false
@@ -120,7 +74,10 @@ jobs:
           - "ubuntu-20.04"
           - "ubuntu-22.04"
 
-        php-version: ${{ fromJson(needs.supported-versions-matrix.outputs.version-all) }}
+        php-version:
+          - "8.1"
+          - "8.2"
+          - "8.3"
 
         dependencies:
           - "highest"
@@ -139,20 +96,20 @@ jobs:
         uses: "shivammathur/setup-php@2.24.0"
         with:
           php-version: "${{ matrix.php-version }}"
-          extensions: "none, phar, json, opcache, ${{ join(fromJson(needs.supported-versions-matrix.outputs.extensions), ', ') }}, ${{ inputs.extensions }}"
+          extensions: "none, phar, json, opcache, ${{ inputs.extensions }}"
           ini-values: "${{ inputs.ini-values }}"
           coverage: "none"
           tools: "composer:v2"
 
       - name: "Update dependencies with composer"
-        if: ${{ needs.supported-versions-matrix.outputs.upcoming != matrix.php-version }}
+        if: ${{ '8.3' != matrix.php-version }}
         uses: "ramsey/composer-install@2.2.0"
         with:
           dependency-versions: "${{ matrix.dependencies }}"
           composer-options: "${{ inputs.composer-options }}"
 
       - name: "Update dependencies with composer"
-        if: ${{ needs.supported-versions-matrix.outputs.upcoming == matrix.php-version }}
+        if: ${{ '8.3' == matrix.php-version }}
         uses: "ramsey/composer-install@2.2.0"
         with:
           dependency-versions: "${{ matrix.dependencies }}"
@@ -164,9 +121,7 @@ jobs:
   mega-lint:
     name: "Linting with nvuillam/mega-linter"
 
-    needs:
-      - "supported-versions-matrix"
-      - "install"
+    needs: "install"
 
     runs-on: "${{ matrix.operating-system }}"
     timeout-minutes: 10
@@ -180,7 +135,9 @@ jobs:
           - "ubuntu-20.04"
           - "ubuntu-22.04"
 
-        php-version: ${{ fromJson(needs.supported-versions-matrix.outputs.version) }}
+        php-version:
+          # Should use the lowest supported version
+          - "8.1"
 
     steps:
       - name: "Checkout"
@@ -195,7 +152,7 @@ jobs:
         uses: "shivammathur/setup-php@2.24.0"
         with:
           php-version: "${{ matrix.php-version }}"
-          extensions: "none, phar, json, opcache, ${{ join(fromJson(needs.supported-versions-matrix.outputs.extensions), ', ') }}, ${{ inputs.extensions }}"
+          extensions: "none, phar, json, opcache, ${{ inputs.extensions }}"
           ini-values: "${{ inputs.ini-values }}"
           coverage: "none"
           tools: "composer:v2"
@@ -216,9 +173,7 @@ jobs:
   php-lint:
     name: "Linting with overtrue/phplint"
 
-    needs:
-      - "supported-versions-matrix"
-      - "install"
+    needs: "install"
 
     runs-on: "${{ matrix.operating-system }}"
     timeout-minutes: 10
@@ -232,51 +187,8 @@ jobs:
           - "ubuntu-20.04"
           - "ubuntu-22.04"
 
-        php-version: ${{ fromJson(needs.supported-versions-matrix.outputs.version) }}
-
-    steps:
-      - name: "Checkout"
-        uses: "actions/checkout@v3"
-        with:
-          # Disabling shallow clone is recommended for improving relevancy of reporting
-          fetch-depth: 0
-          lfs: false
-          persist-credentials: false
-
-      - name: "Install PHP"
-        uses: "shivammathur/setup-php@2.24.0"
-        with:
-          php-version: "${{ matrix.php-version }}"
-          extensions: "none, phar, json, opcache, ${{ join(fromJson(needs.supported-versions-matrix.outputs.extensions), ', ') }}, ${{ inputs.extensions }}"
-          ini-values: "${{ inputs.ini-values }}"
-          coverage: "none"
-          tools: "composer:v2"
-
-      - name: "Lint PHP"
-        uses: "overtrue/phplint@6.1.0"
-
-  php-cs-fixer:
-    name: "Check Coding Standards with PHP-CS-Fixer"
-
-    needs:
-      - "supported-versions-matrix"
-      - "mega-lint"
-      - "php-lint"
-
-    runs-on: "${{ matrix.operating-system }}"
-    timeout-minutes: 10
-    continue-on-error: false
-
-    strategy:
-      fail-fast: false
-
-      matrix:
-        operating-system:
-          - "ubuntu-20.04"
-          - "ubuntu-22.04"
-
-        #php-version: ${{ fromJson(needs.supported-versions-matrix.outputs.version) }}
         php-version:
+          # Should use the lowest supported version
           - "8.1"
 
     steps:
@@ -292,7 +204,53 @@ jobs:
         uses: "shivammathur/setup-php@2.24.0"
         with:
           php-version: "${{ matrix.php-version }}"
-          extensions: "none, phar, json, opcache, ${{ join(fromJson(needs.supported-versions-matrix.outputs.extensions), ', ') }}, ${{ inputs.extensions }}"
+          extensions: "none, phar, json, opcache, ${{ inputs.extensions }}"
+          ini-values: "${{ inputs.ini-values }}"
+          coverage: "none"
+          tools: "composer:v2"
+
+      - name: "Lint PHP"
+        uses: "overtrue/phplint@6.1.0"
+
+  php-cs-fixer:
+    name: "Check Coding Standards with PHP-CS-Fixer"
+
+    needs:
+      - "mega-lint"
+      - "php-lint"
+
+    runs-on: "${{ matrix.operating-system }}"
+    timeout-minutes: 10
+    continue-on-error: false
+
+    strategy:
+      fail-fast: false
+
+      matrix:
+        operating-system:
+          - "ubuntu-20.04"
+          - "ubuntu-22.04"
+
+        php-version:
+          # Should use the lowest supported version to ensure the CS-Fixer does
+          # not get confused and apply a rule that would break on lower supported
+          # versions.
+          - "8.1"
+
+    steps:
+      - name: "Checkout"
+        uses: "actions/checkout@v3"
+        with:
+          # Disabling shallow clone is recommended for improving relevancy of reporting
+          fetch-depth: 0
+          lfs: false
+          persist-credentials: false
+
+      - name: "Install PHP"
+        uses: "shivammathur/setup-php@2.24.0"
+        with:
+          php-version: "${{ matrix.php-version }}"
+          extensions: "none, phar, json, opcache, ${{ inputs.extensions }}"
           ini-values: "${{ inputs.ini-values }}"
           coverage: "none"
           tools: "composer:v2, cs2pr"
@@ -314,7 +272,6 @@ jobs:
     name: "Check Coding Standards with PHPCS"
 
     needs:
-      - "supported-versions-matrix"
       - "mega-lint"
       - "php-lint"
 
@@ -330,7 +287,11 @@ jobs:
           - "ubuntu-20.04"
           - "ubuntu-22.04"
 
-        php-version: ${{ fromJson(needs.supported-versions-matrix.outputs.version) }}
+        php-version:
+          # Should use the lowest supported version to ensure the PHHPCS does
+          # not get confused and apply a rule that would break on lower supported
+          # versions.
+          - "8.1"
 
     steps:
       - name: "Checkout"
@@ -345,7 +306,7 @@ jobs:
         uses: "shivammathur/setup-php@2.24.0"
         with:
           php-version: "${{ matrix.php-version }}"
-          extensions: "none, phar, json, opcache, ${{ join(fromJson(needs.supported-versions-matrix.outputs.extensions), ', ') }}, ${{ inputs.extensions }}"
+          extensions: "none, phar, json, opcache, ${{ inputs.extensions }}"
           ini-values: "${{ inputs.ini-values }}"
           coverage: "none"
           tools: "composer:v2, cs2pr"
@@ -363,7 +324,6 @@ jobs:
     name: "Static Code Analysis with PHPStan"
 
     needs:
-      - "supported-versions-matrix"
       - "mega-lint"
       - "php-lint"
 
@@ -379,7 +339,8 @@ jobs:
           - "ubuntu-20.04"
           - "ubuntu-22.04"
 
-        php-version: ${{ fromJson(needs.supported-versions-matrix.outputs.version) }}
+        php-version:
+          - "8.1"
 
     steps:
       - name: "Checkout"
@@ -394,7 +355,7 @@ jobs:
         uses: "shivammathur/setup-php@2.24.0"
         with:
           php-version: "${{ matrix.php-version }}"
-          extensions: "none, phar, json, opcache, ${{ join(fromJson(needs.supported-versions-matrix.outputs.extensions), ', ') }}, ${{ inputs.extensions }}"
+          extensions: "none, phar, json, opcache, ${{ inputs.extensions }}"
           ini-values: "${{ inputs.ini-values }}"
           coverage: "none"
           tools: "composer:v2"

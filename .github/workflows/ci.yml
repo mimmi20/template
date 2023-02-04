@@ -368,3 +368,27 @@ jobs:
 
       - name: "Run phpstan/phpstan"
         run: "vendor/bin/phpstan analyse -c phpstan.neon --memory-limit=768M --no-progress"
+
+  # This is a meta job to avoid to have to constantly change the protection rules
+  # whenever we touch the matrix.
+  tests-status:
+    name: "Validate & Lint Status"
+
+    runs-on: "ubuntu-22.04"
+
+    needs:
+      - "validate"
+      - "mega-lint"
+      - "php-lint"
+      - "php-cs-fixer"
+      - "phpcs"
+      - "static-code-analysis"
+
+    steps:
+      - name: Successful run
+        if: ${{ !(contains(needs.*.result, 'failure')) }}
+        run: exit 0
+
+      - name: Failing run
+        if: ${{ contains(needs.*.result, 'failure') }}
+        run: exit 1

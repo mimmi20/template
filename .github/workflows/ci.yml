@@ -17,6 +17,10 @@ on:
         required: false
         type: string
         default: ""
+      skip-phpstan:
+        required: false
+        type: boolean
+        default: false
     secrets:
       envPAT:
         required: true
@@ -330,6 +334,8 @@ jobs:
     runs-on: "${{ matrix.operating-system }}"
     timeout-minutes: 10
     continue-on-error: false
+
+    if: inputs.skip-phpstan == false
 
     strategy:
       fail-fast: false

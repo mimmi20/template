@@ -66,6 +66,10 @@ jobs:
 #          ini-values: "opcache.enable=1, opcache.fast_shutdown=0, zend.assertions=1, assert.exception=On, intl.default_locale=de, intl.use_exceptions=1, zend.exception_ignore_args=0"
 #          coverage: "none"
 #          tools: "composer:v2"
+#        env:
+#          fail-fast: true
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#          phpts: "ts"
 #
 #      - name: "Update dependencies with composer"
 #        uses: "ramsey/composer-install@v2"
@@ -118,6 +122,10 @@ jobs:
 #          ini-values: "opcache.enable=1, opcache.fast_shutdown=0, zend.assertions=1, assert.exception=On, intl.default_locale=de, intl.use_exceptions=1, zend.exception_ignore_args=0, xdebug.mode=coverage"
 #          coverage: "xdebug"
 #          tools: "composer:v2"
+#        env:
+#          fail-fast: true
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#          phpts: "ts"
 #
 #      - name: "Update dependencies with composer"
 #        uses: "ramsey/composer-install@v2"
@@ -129,7 +137,7 @@ jobs:
 #        run: "mkdir -p .build/coverage"
 #
 #      - name: "Collect code coverage with Xdebug and phpunit/phpunit"
-#        run: "vendor/bin/phpunit -c phpunit.xml --verbose --coverage-clover=.build/coverage/clover.xml --coverage-text --coverage-xml=.build/coverage/coverage-xml --log-junit=.build/coverage/phpunit.junit.xml"
+#        run: "vendor/bin/phpunit -c phpunit.xml --coverage-clover=.build/coverage/clover.xml --coverage-text --coverage-xml=.build/coverage/coverage-xml --log-junit=.build/coverage/phpunit.junit.xml"
 #
 #      - name: "Upload coverage to Codecov"
 #        uses: "codecov/codecov-action@v3.1.1"
@@ -142,3 +150,21 @@ jobs:
 #        env:
 #          STRYKER_DASHBOARD_API_KEY: ${{ secrets.STRYKER_DASHBOARD_API_KEY }}
 #        run: "vendor/bin/infection --show-mutations --only-covered --min-covered-msi=84 --min-msi=84 --coverage=.build/coverage --logger-github --no-progress -vv"
+#
+#  # This is a meta job to avoid to have to constantly change the protection rules
+#  # whenever we touch the matrix.
+#  tests-status:
+#    name: "Unit & Integration Tests Status"
+#    runs-on: "ubuntu-22.04"
+#    needs:
+#      - "tests"
+#      - "code-coverage"
+#    if: always()
+#    steps:
+#      - name: Successful run
+#        if: ${{ !(contains(needs.*.result, 'failure')) }}
+#        run: exit 0
+#
+#      - name: Failing run
+#        if: ${{ contains(needs.*.result, 'failure') }}
+#        run: exit 1

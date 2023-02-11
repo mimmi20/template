@@ -57,6 +57,10 @@ jobs:
           ini-values: "${{ inputs.ini-values }}"
           coverage: "none"
           tools: "composer:v2"
+        env:
+          fail-fast: true
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          phpts: "ts"
 
       - name: "Validate composer.json"
         run: "composer validate --strict"
@@ -87,6 +91,10 @@ jobs:
           - "highest"
           - "lowest"
 
+        ts:
+          - "ts"
+          - "nts"
+
     steps:
       - name: "Checkout"
         uses: "actions/checkout@v3"
@@ -104,6 +112,10 @@ jobs:
           ini-values: "${{ inputs.ini-values }}"
           coverage: "none"
           tools: "composer:v2"
+        env:
+          fail-fast: true
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          phpts: "${{ matrix.ts }}"
 
       - name: "Update dependencies with composer"
         if: ${{ '8.3' != matrix.php-version }}
@@ -160,6 +172,10 @@ jobs:
           ini-values: "${{ inputs.ini-values }}"
           coverage: "none"
           tools: "composer:v2"
+        env:
+          fail-fast: true
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          phpts: "ts"
 
       - name: "Update dependencies with composer"
         uses: "ramsey/composer-install@2.2.0"
@@ -212,6 +228,10 @@ jobs:
           ini-values: "${{ inputs.ini-values }}"
           coverage: "none"
           tools: "composer:v2"
+        env:
+          fail-fast: true
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          phpts: "ts"
 
       - name: "Lint PHP"
         uses: "overtrue/phplint@6.1.0"
@@ -258,6 +278,10 @@ jobs:
           ini-values: "${{ inputs.ini-values }}"
           coverage: "none"
           tools: "composer:v2, cs2pr"
+        env:
+          fail-fast: true
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          phpts: "ts"
 
       - name: "Update dependencies with composer"
         uses: "ramsey/composer-install@2.2.0"
@@ -314,6 +338,10 @@ jobs:
           ini-values: "${{ inputs.ini-values }}"
           coverage: "none"
           tools: "composer:v2, cs2pr"
+        env:
+          fail-fast: true
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          phpts: "ts"
 
       - name: "Update dependencies with composer"
         uses: "ramsey/composer-install@2.2.0"
@@ -365,6 +393,10 @@ jobs:
           ini-values: "${{ inputs.ini-values }}"
           coverage: "none"
           tools: "composer:v2"
+        env:
+          fail-fast: true
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          phpts: "ts"
 
       - name: "Update dependencies with composer"
         uses: "ramsey/composer-install@2.2.0"

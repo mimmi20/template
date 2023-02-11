@@ -66,6 +66,10 @@ jobs:
 #          ini-values: "opcache.enable=1, opcache.fast_shutdown=0, zend.assertions=1, assert.exception=On, intl.default_locale=de, intl.use_exceptions=1, zend.exception_ignore_args=0"
 #          coverage: "none"
 #          tools: "composer:v2"
+#        env:
+#          fail-fast: true
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#          phpts: "ts"
 #
 #      - name: "Update dependencies with composer"
 #        uses: "ramsey/composer-install@v2"
@@ -118,6 +122,10 @@ jobs:
 #          ini-values: "opcache.enable=1, opcache.fast_shutdown=0, zend.assertions=1, assert.exception=On, intl.default_locale=de, intl.use_exceptions=1, zend.exception_ignore_args=0, xdebug.mode=coverage"
 #          coverage: "xdebug"
 #          tools: "composer:v2"
+#        env:
+#          fail-fast: true
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#          phpts: "ts"
 #
 #      - name: "Update dependencies with composer"
 #        uses: "ramsey/composer-install@v2"

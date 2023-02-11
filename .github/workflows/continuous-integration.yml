@@ -150,3 +150,21 @@ jobs:
 #        env:
 #          STRYKER_DASHBOARD_API_KEY: ${{ secrets.STRYKER_DASHBOARD_API_KEY }}
 #        run: "vendor/bin/infection --show-mutations --only-covered --min-covered-msi=84 --min-msi=84 --coverage=.build/coverage --logger-github --no-progress -vv"
+#
+#  # This is a meta job to avoid to have to constantly change the protection rules
+#  # whenever we touch the matrix.
+#  tests-status:
+#    name: "Unit & Integration Tests Status"
+#    runs-on: "ubuntu-22.04"
+#    needs:
+#      - "tests"
+#      - "code-coverage"
+#    if: always()
+#    steps:
+#      - name: Successful run
+#        if: ${{ !(contains(needs.*.result, 'failure')) }}
+#        run: exit 0
+#
+#      - name: Failing run
+#        if: ${{ contains(needs.*.result, 'failure') }}
+#        run: exit 1

@@ -21,6 +21,10 @@ on:
         required: false
         type: boolean
         default: false
+      skip-phplint:
+        required: false
+        type: boolean
+        default: false
     secrets:
       envPAT:
         required: true
@@ -198,6 +202,8 @@ jobs:
     runs-on: "${{ matrix.operating-system }}"
     timeout-minutes: 10
     continue-on-error: false
+
+    if: inputs.skip-phplint == false
 
     strategy:
       fail-fast: false

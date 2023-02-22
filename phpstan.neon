@@ -31,11 +31,11 @@ parameters:
   inferPrivatePropertyTypeFromConstructor: false
   polluteScopeWithAlwaysIterableForeach: false
   polluteScopeWithLoopInitialAssignments: false
-//  reportAlwaysTrueInLastCondition: true
+# reportAlwaysTrueInLastCondition: true
   reportMaybesInMethodSignatures: true
   reportMaybesInPropertyPhpDocTypes: true
   reportStaticMethodSignatures: true
-//  reportWrongPhpDocTypeInVarTag: true
+# reportWrongPhpDocTypeInVarTag: true
   treatPhpDocTypesAsCertain: false
 
   tipsOfTheDay: false

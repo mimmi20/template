@@ -138,62 +138,6 @@ jobs:
       - name: "Check dependencies with composer"
         run: "composer outdated --direct${{ inputs.composer-outdated-option }}"
 
-  mega-lint:
-    name: "Linting with nvuillam/mega-linter"
-
-    needs: "install"
-
-    runs-on: "${{ matrix.operating-system }}"
-    timeout-minutes: 10
-    continue-on-error: false
-
-    strategy:
-      fail-fast: false
-
-      matrix:
-        operating-system:
-          - "ubuntu-20.04"
-          - "ubuntu-22.04"
-
-        php-version:
-          # Should use the lowest supported version
-          - "8.1"
-
-    steps:
-      - name: "Checkout"
-        uses: "actions/checkout@v3"
-        with:
-          # Disabling shallow clone is recommended for improving relevancy of reporting
-          fetch-depth: 0
-          lfs: false
-          persist-credentials: false
-
-      - name: "Install PHP"
-        uses: "shivammathur/setup-php@2.24.0"
-        with:
-          php-version: "${{ matrix.php-version }}"
-          extensions: "none, phar, json, opcache, ${{ inputs.extensions }}"
-          ini-values: "${{ inputs.ini-values }}"
-          coverage: "none"
-          tools: "composer:v2"
-        env:
-          fail-fast: true
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          phpts: "ts"
-
-      - name: "Update dependencies with composer"
-        uses: "ramsey/composer-install@2.2.0"
-        with:
-          dependency-versions: "highest"
-          composer-options: "${{ inputs.composer-options }}"
-
-      - name: "Linter"
-        # You can override Mega-Linter flavor used to have faster performances
-        # More info at https://nvuillam.github.io/mega-linter/flavors/
-        uses: "nvuillam/mega-linter/flavors/php@v6.19.0"
-        env:
-          GITHUB_TOKEN: ${{ secrets.envPAT }}
-
   php-lint:
     name: "Linting with overtrue/phplint"
 
@@ -248,9 +192,7 @@ jobs:
   php-cs-fixer:
     name: "Check Coding Standards with PHP-CS-Fixer"
 
-    needs:
-      - "mega-lint"
-      - "php-lint"
+    needs: "php-lint"
 
     runs-on: "${{ matrix.operating-system }}"
     timeout-minutes: 10
@@ -308,9 +250,7 @@ jobs:
   phpcs:
     name: "Check Coding Standards with PHPCS"
 
-    needs:
-      - "mega-lint"
-      - "php-lint"
+    needs: "php-lint"
 
     runs-on: "${{ matrix.operating-system }}"
     timeout-minutes: 10
@@ -364,9 +304,7 @@ jobs:
   static-code-analysis:
     name: "Static Code Analysis with PHPStan"
 
-    needs:
-      - "mega-lint"
-      - "php-lint"
+    needs: "php-lint"
 
     runs-on: "${{ matrix.operating-system }}"
     timeout-minutes: 10
@@ -427,7 +365,7 @@ jobs:
 
     needs:
       - "validate"
-      - "mega-lint"
+      - "install"
       - "php-lint"
       - "php-cs-fixer"
       - "phpcs"

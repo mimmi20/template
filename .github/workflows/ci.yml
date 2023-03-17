@@ -462,7 +462,7 @@ jobs:
           composer-options: "${{ inputs.composer-options }}"
 
       - name: "Run checks with rector/rector"
-        run: "rector process src tests --ansi --dry-run --no-diffs"
+        run: "rector process --ansi --dry-run --no-diffs"
 
   # This is a meta job to avoid to have to constantly change the protection rules
   # whenever we touch the matrix.

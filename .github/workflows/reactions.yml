@@ -23,7 +23,7 @@ jobs:
     steps:
       - uses: "dessant/reaction-comments@v3"
         with:
-          github-token: "ubuntu-22.04""ubuntu-22.04"
+          github-token: "${{ secrets.GITHUB_TOKEN }}"
           issue-comment: >
             :wave: @{comment-author}, would you like to leave
             a reaction instead?

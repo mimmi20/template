@@ -18,8 +18,8 @@ updates:
         # dependency name)
         patterns:
           - "*"
-#        exclude-patterns:
-#          - "gc_ruboconfig"
+        # exclude-patterns:
+        #   - "gc_ruboconfig"
 
     open-pull-requests-limit: 10
 
@@ -64,8 +64,8 @@ updates:
         # dependency name)
         patterns:
           - "*"
-      #        exclude-patterns:
-      #          - "gc_ruboconfig"
+        # exclude-patterns:
+        #   - "gc_ruboconfig"
 
     open-pull-requests-limit: 10
 

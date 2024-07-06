@@ -68,6 +68,10 @@ updates:
       - dependency-name: "symfony/filesystem"
       - dependency-name: "predis/predis"
       - dependency-name: "elasticsearch/elasticsearch"
+      - dependency-name: "friendsofphp/php-cs-fixer"
+      - dependency-name: "sirbrillig/phpcs-variable-analysis"
+      - dependency-name: "slevomat/coding-standard"
+      - dependency-name: "squizlabs/php_codesniffer"
 
     # Disable rebasing for all pull requests
     rebase-strategy: "disabled"

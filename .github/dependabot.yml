@@ -15,9 +15,8 @@ updates:
     groups:
       security-updates:
         applies-to: "security-updates"
-        update-types:
-          - "minor"
-          - "patch"
+        patterns:
+          - "*"
         exclude-patterns:
           - "friendsofphp/php-cs-fixer"
           - "sirbrillig/phpcs-variable-analysis"
@@ -25,9 +24,8 @@ updates:
           - "squizlabs/php_codesniffer"
       version-updates:
         applies-to: "version-updates"
-        update-types:
-          - "minor"
-          - "patch"
+        patterns:
+          - "*"
         exclude-patterns:
           - "friendsofphp/php-cs-fixer"
           - "sirbrillig/phpcs-variable-analysis"
@@ -95,14 +93,12 @@ updates:
     groups:
       security-updates:
         applies-to: "security-updates"
-        update-types:
-          - "minor"
-          - "patch"
+        patterns:
+          - "*"
       version-updates:
         applies-to: "version-updates"
-        update-types:
-          - "minor"
-          - "patch"
+        patterns:
+          - "*"
 
     open-pull-requests-limit: 10
 
@@ -155,16 +151,12 @@ updates:
     groups:
       # Specify a name for the group, which will be used in pull request titles
       # and branch names
-      version-updates:
-        applies-to: "version-updates"
-        # Define patterns to include dependencies in the group (based on
-        # dependency name)
-        patterns:
-          - "*"
       security-updates:
         applies-to: "security-updates"
-        # Define patterns to include dependencies in the group (based on
-        # dependency name)
+        patterns:
+          - "*"
+      version-updates:
+        applies-to: "version-updates"
         patterns:
           - "*"
 
